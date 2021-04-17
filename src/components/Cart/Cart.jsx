@@ -3,13 +3,22 @@ import { Grid, Typography, Container, Button } from "@material-ui/core";
 
 import useStyles from "./styles";
 import CartItem from "./CartItem/CartItem";
+import { Link } from "react-router-dom";
 
-const Cart = ({ cart }) => {
+const Cart = ({
+  cart,
+  handleUpdateCartQty,
+  handleRemoveFromCart,
+  handleEmptyCart,
+}) => {
   const classes = useStyles();
 
   const EmptyCart = () => (
     <Typography variant="subtitle1">
-      Your cart is empty, go to the Store
+      Your cart is empty, go to the{" "}
+      <Link to="/" className={classes.link}>
+        Store
+      </Link>
     </Typography>
   );
 
@@ -18,7 +27,11 @@ const Cart = ({ cart }) => {
       <Grid container spacing={3}>
         {cart.line_items.map((item) => (
           <Grid item xs={12} sm={4} key={item.id}>
-            <CartItem item={item} />
+            <CartItem
+              item={item}
+              updateCart={handleUpdateCartQty}
+              removeCart={handleRemoveFromCart}
+            />
           </Grid>
         ))}
       </Grid>
@@ -33,6 +46,7 @@ const Cart = ({ cart }) => {
             type="button"
             variant="contained"
             color="secondary"
+            onClick={handleEmptyCart}
           >
             Empty Cart
           </Button>
@@ -42,6 +56,8 @@ const Cart = ({ cart }) => {
             type="button"
             variant="contained"
             color="primary"
+            component={Link}
+            to="/checkout"
           >
             Check Out
           </Button>
@@ -54,7 +70,7 @@ const Cart = ({ cart }) => {
   return (
     <Container>
       <div className={classes.toolbar}>
-        <Typography className={classes.title} variant="h3" gutterBottom>
+        <Typography className={classes.title} variant="h4" gutterBottom>
           Your Shopping Cart
         </Typography>
         {!cart.line_items.length ? <EmptyCart /> : <FilledCart />}

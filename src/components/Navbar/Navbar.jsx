@@ -12,14 +12,23 @@ import { ShoppingCart } from "@material-ui/icons";
 
 import logo from "../../assets/logo.png";
 import useStyles from "./styles";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = ({ totalItems }) => {
   const classes = useStyles();
+  const location = useLocation();
+
   return (
     <>
       <AppBar position="fixed" color="inherit" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" color="inherit" className={classes.title}>
+          <Typography
+            component={Link}
+            to="/"
+            variant="h6"
+            color="inherit"
+            className={classes.title}
+          >
             <img
               src={logo}
               alt="Merca Prime"
@@ -29,13 +38,20 @@ const Navbar = ({ totalItems }) => {
             Mercar Prime
           </Typography>
           <div className={classes.grow} />
-          <div className={classes.button}>
-            <IconButton aria-label="Show Cart Item" color="inherit">
-              <Badge color="secondary" badgeContent={totalItems}>
-                <ShoppingCart />
-              </Badge>
-            </IconButton>
-          </div>
+          {location.pathname === "/" && (
+            <div className={classes.button}>
+              <IconButton
+                component={Link}
+                to="/cart"
+                aria-label="Show Cart Item"
+                color="inherit"
+              >
+                <Badge color="secondary" badgeContent={totalItems}>
+                  <ShoppingCart />
+                </Badge>
+              </IconButton>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </>
