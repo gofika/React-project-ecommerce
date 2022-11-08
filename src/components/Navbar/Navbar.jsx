@@ -26,7 +26,7 @@ const Navbar = ({ totalItems }) => {
               height="25px"
               className={classes.image}
             />
-            Mercar Prime
+            Merca Prime
           </Typography>
           <div className={classes.grow} />
           <div className={classes.button}>
